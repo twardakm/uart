@@ -26,7 +26,7 @@ int main()
 
     //ustawianie UART
     int fd;
-    if (OpenSerial(&fd, "/dev/ttyS0", B19200) == 0) printf("Port szeregowy został otwarty poprawnie\n");
+    if (OpenSerial(&fd, "/dev/ttyS0", B4800) == 0) printf("Port szeregowy został otwarty poprawnie\n");
     else
     {
         printf("Błąd przy otwieraniu portu szeregowego\n");
@@ -41,7 +41,7 @@ int main()
     while(1)
     {
         scanf("%s", t);
-        printf("\nWysłano: %s\n", t)
+        printf("\nWysłano: %s\n", t);
         WriteSerial(&fd, t, strlen(t));
 
        // if (r == 'a')
