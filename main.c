@@ -57,7 +57,7 @@ int main()
                 sunxi_gpio_set_output(PIN39, 1);
         }
 //        else if (r == 'q')
-            break;
+        //    break;
 
         ReadSerial(&fd, r, 8);
 
