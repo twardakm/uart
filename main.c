@@ -29,8 +29,8 @@ int main()
     while(1)
     {
         printf("\nWysyłanie \'AT\'... ");
-        WriteSerial(myPort, send, 4);
-        printf("wysłano");
+        WriteSerial(myPort, send, 6);
+        printf("wysłano\n");
         getchar();
 
         while (1)
