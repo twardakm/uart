@@ -30,7 +30,9 @@
 
 #include "uart_olinuxino.h"
 
-int _DEBUG = 0;
+#ifndef DEBUG
+	int _DEBUG = 0;
+#endif
 
 int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
 {
