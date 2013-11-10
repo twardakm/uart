@@ -59,7 +59,7 @@ int main()
 
     sunxi_gpio_cleanup();
 
-    if (CloseSerial((&fd) == 0)) printf ("Poprawnie zamknięto port szeregowy\n");
+    if (CloseSerial(&fd) == 0) printf ("Poprawnie zamknięto port szeregowy\n");
     else
     {
         printf("Nie udało się zamknąć portu szeregowego\n");
