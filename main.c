@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 #include "uart_olinuxino.h"
 #include "gpio_lib.h"
 
@@ -60,7 +61,7 @@ int main()
         //    break;
 
         ReadSerial(&fd, r, 8);
-        ioctl(*fd, TCFLSH, 0);
+        tcflush(fd, TCIFLUSH);
         printf("\n%s\n", r);
     }
 
