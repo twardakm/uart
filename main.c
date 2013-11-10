@@ -60,7 +60,7 @@ int main()
         //    break;
 
         ReadSerial(&fd, r, 8);
-
+        ioctl(*fd, TCFLSH, 0);
         printf("\n%s\n", r);
     }
 
