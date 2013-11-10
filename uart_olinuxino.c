@@ -30,10 +30,6 @@
 
 #include "uart_olinuxino.h"
 
-#ifndef DEBUG
-	int _DEBUG = 0;
-#endif
-
 int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
 {
     struct termios SerialConfig;
@@ -69,18 +65,52 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
                 printf("Done\n");
         }
     }
+    //zmiana ustawień na te wg książki
+
+    /* C_CFLAG */
+
+    /* ustawienie 8 bitów danej */
+    SerialConfig.c_cflag &= ~CSIZE;
+    SerialConfig.c_cflag |= CS8;
+    /* ------------------------ */
+    /* wyłączona kontrola parzystonści i 1 bit stopu */
+    SerialConfig.c_cflag &= ~PARENB;
+    SerialConfig.c_cflag &= ~CSTOPB;
+    /* --------------------------------------------- */
+    SerialConfig.c_cflag &= ~CRTSCTS; // wyłączenie sprzętowej kontroli przepływu
+    SerialConfig.c_cflag |= (CLOCAL | CREAD); //włączenie odbiornika
+
+    /* ------ */
+
+    /* L_FLAG
+    * tryb kanoniczny bez echa i kontroli przepływu danych*/
+    SerialConfig.c_lflag |= ICANON;
+    SerialConfig.c_lflag &= ~(ECHO | ECHOE);
+    /* ------ */
+
+    /* C_IFLAG */
+
+    SerialConfig.c_iflag &= ~(IXON | IXOFF | IXANY); //wyłączenie sprzętowej kontroli przepływu danych
+    /*ignorowanie znaku <CR>, znak nowej lini będzie odblokowywał wywołanie read()*/
+    SerialConfig.c_iflag &= ~(INLCR | IUCLC);
+    SerialConfig.c_iflag |= (IGNCR);
+    /* -------------------------------------------------------------------------- */
+    /* ------- */
+
+    SerialConfig.c_oflag &= ~OPOST; //wyłączenie przetwarzania wyjścia
+
+    fcntl (*fd, F_SETFL, 0); //funkcja read czyta aż do znaku nowej linii
 
     if(_DEBUG)
         printf("Setting in/out speed...");
     cfsetispeed(&SerialConfig, baudrate);
     cfsetospeed(&SerialConfig, baudrate);
+
     cfmakeraw(&SerialConfig);
+
     if(_DEBUG)
         printf("Done\n");
 
-    if(_DEBUG)
-       printf("Flushing serial port...");
-       tcflush(*fd, TCIFLUSH);
     if(_DEBUG)
        printf("Done\n");
 
@@ -96,6 +126,10 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
         {
             if(_DEBUG)
                 printf("Done\n");
+            if(_DEBUG)
+                printf("Flushing serial port...");
+            ioctl(*fd, TCFLSH, 0);
+            //tcflush(*fd, TCIFLUSH);
             return 0;
         }
 

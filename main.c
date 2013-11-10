@@ -42,7 +42,7 @@ int main()
         scanf("%s", &t);
         WriteSerial(&fd, &t, 1);
 
-        if ((int)r == 'a')
+        if (r == 'a')
         {
             if (sunxi_gpio_get_output(PIN4))
                 sunxi_gpio_set_output(PIN4, 0);

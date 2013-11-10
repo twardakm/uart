@@ -5,9 +5,9 @@
 #include <termios.h>
 
 #ifdef DEBUG
-	#define _DEBUG 1
+#define _DEBUG 1
 #else
-	extern int _DEBUG;
+#define _DEBUG 0
 #endif
 
 int OpenSerial(int *fd, char *SerialName, speed_t baudrate);
