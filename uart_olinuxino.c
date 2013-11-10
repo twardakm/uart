@@ -92,8 +92,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
 
     SerialConfig.c_iflag &= ~(IXON | IXOFF | IXANY); //wyłączenie sprzętowej kontroli przepływu danych
     /*ignorowanie znaku <CR>, znak nowej lini będzie odblokowywał wywołanie read()*/
-    SerialConfig.c_iflag &= ~(INLCR | IUCLC);
-    SerialConfig.c_iflag |= (IGNCR);
+    SerialConfig.c_iflag &= ~(INLCR | IUCLC | IGNCR);
     /* -------------------------------------------------------------------------- */
     /* ------- */
 
