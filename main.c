@@ -33,27 +33,31 @@ int main()
     }
 
 
-    printf("1 - dioda 1\n2 - dioda 2\n0 - wyjscie\n");
+    printf("a - dioda 1\nb - dioda 2\nq - wyjscie\n");
 
-    int d;
+    char t;
+    char r;
     while(1)
     {
-        scanf("%d", &d);
-        if (d == 1)
+        scanf("%s", &t);
+        WriteSerial(&fd, &t, 1);
+
+        ReadSerial(&fd, &r, 1);
+        if (r == 'a')
         {
             if (sunxi_gpio_get_output(PIN4))
                 sunxi_gpio_set_output(PIN4, 0);
             else
                 sunxi_gpio_set_output(PIN4, 1);
         }
-        else if (d == 2)
+        else if (r == 'b')
         {
             if (sunxi_gpio_get_output(PIN39))
                 sunxi_gpio_set_output(PIN39, 0);
             else
                 sunxi_gpio_set_output(PIN39, 1);
         }
-        else if (d == 0)
+        else if (r == 'q')
             break;
     }
 
