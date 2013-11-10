@@ -23,6 +23,16 @@ int main()
         return -1;
     }
 
+    //ustawianie UART
+    int fd;
+    if (OpenSerial(&fd, "/dev/ttyS0", B19200) == 0) printf("Port szeregowy został otwarty poprawnie\n");
+    else
+    {
+        printf("Błąd przy otwieraniu portu szeregowego\n");
+        return -1;
+    }
+
+
     printf("1 - dioda 1\n2 - dioda 2\n0 - wyjscie\n");
 
     int d;
@@ -48,5 +58,12 @@ int main()
     }
 
     sunxi_gpio_cleanup();
+
+    if (CloseSerial((&fd) == 0)) printf ("Poprawnie zamknięto port szeregowy\n");
+    else
+    {
+        printf("Nie udało się zamknąć portu szeregowego\n");
+        return -1;
+    }
     return 0;
 }
