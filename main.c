@@ -16,7 +16,7 @@ int main()
     }
 
     if (sunxi_gpio_set_cfgpin(PIN4, 1) == 0 &&
-        sunxi_gpio_set_cfgpin(PIN39, 1 == 0)) printf("Port %d oraz %d został ustawiony jako wyjście\n", PIN4, PIN39);
+        sunxi_gpio_set_cfgpin(PIN39, 1) == 0) printf("Port %d oraz %d został ustawiony jako wyjście\n", PIN4, PIN39);
     else
     {
         printf("Błąd ustawiania na wyjście portów\n");
