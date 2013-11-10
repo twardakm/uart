@@ -23,7 +23,7 @@ int main()
         return -1;
     }
 
-    printf("1 - zapala\n2 - gasi\n0 - wyjscie\n");
+    printf("1 - dioda 1\n2 - dioda 2\n0 - wyjscie\n");
 
     int d;
     while(1)
@@ -31,18 +31,20 @@ int main()
         scanf("%d", &d);
         if (d == 1)
         {
-            sunxi_gpio_output(PIN4 , 1);
-            sunxi_gpio_output(PIN39, 1);
+            if (sunxi_gpio_get_output(PIN4))
+                sunxi_gpio_set_output(PIN4, 0);
+            else
+                sunxi_gpio_set_output(PIN4, 0);
         }
         else if (d == 2)
         {
-            sunxi_gpio_output(PIN4 , 0);
-            sunxi_gpio_output(PIN39, 0);
+            if (sunxi_gpio_get_output(PIN39))
+                sunxi_gpio_set_output(PIN39, 0);
+            else
+                sunxi_gpio_set_output(PIN39, 0);
         }
         else if (d == 0)
             break;
-
-        printf("Stan portu 4: %d", sunxi_gpio_get_output(PIN4));
     }
 
     sunxi_gpio_cleanup();

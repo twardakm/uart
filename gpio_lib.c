@@ -110,7 +110,7 @@ int sunxi_gpio_get_cfgpin(unsigned int pin) {
     cfg >>= offset;
     return (cfg & 0xf);
 }
-int sunxi_gpio_output(unsigned int pin, unsigned int val) {
+int sunxi_gpio_set_output(unsigned int pin, unsigned int val) {
 
     unsigned int bank = GPIO_BANK(pin);
     unsigned int num = GPIO_NUM(pin);

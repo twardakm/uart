@@ -196,7 +196,7 @@ extern int sunxi_gpio_input(unsigned int pin);
 extern int sunxi_gpio_init(void);
 extern int sunxi_gpio_set_cfgpin(unsigned int pin, unsigned int val);
 extern int sunxi_gpio_get_cfgpin(unsigned int pin);
-extern int sunxi_gpio_output(unsigned int pin, unsigned int val);
+extern int sunxi_gpio_set_output(unsigned int pin, unsigned int val);
 extern int sunxi_gpio_get_output(unsigned int pin);
 extern void sunxi_gpio_cleanup(void);
 
