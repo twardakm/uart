@@ -37,16 +37,26 @@ int main()
 
     printf("a - dioda 1\nb - dioda 2\nq - wyjscie\n");
 
-    char *t = malloc(sizeof (char) * 8);
-    char *r = malloc(sizeof (char) * 8);
+    char *message = malloc(sizeof (char) * 8);
+    char buff[2];
+    buff[1] = 0;
+    int i = 0;
+    int n;
+
     while(1)
     {
-        scanf("%s", t);
-        WriteSerial(&fd, t, strlen(t));
-        ReadSerial(&fd, r, 8);
+        for (i = 0; i < 8; i++)
+        {
+            n = ReadSerial(&fd, buff, 1);
+            if (n > 0)
+            {
+                message[i] = buff[0];
+                fflush(stdout);
+            }
+        }
 
        // if (r == 'a')
-        {
+      /*  {
             if (sunxi_gpio_get_output(PIN4))
                 sunxi_gpio_set_output(PIN4, 0);
             else
@@ -60,9 +70,9 @@ int main()
                 sunxi_gpio_set_output(PIN39, 1);
         }
 //        else if (r == 'q')
-        //    break;
+        //    break;*/
 
-        printf("\nOdebrano: %s\n", r);
+        printf("\nOdebrano: %s\n", message);
     }
 
     sunxi_gpio_cleanup();
@@ -74,8 +84,7 @@ int main()
         return -1;
     }
 
-    free(t);
-    free(r);
+    free(message);
 
     return 0;
 }
