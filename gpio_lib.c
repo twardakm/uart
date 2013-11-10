@@ -129,7 +129,7 @@ int sunxi_gpio_set_output(unsigned int pin, unsigned int val) {
     return 0;
 }
 
-int sunxi_gpio_get_output(unsigned int pin, int ktore)
+int sunxi_gpio_get_output(unsigned int pin)
 {
     unsigned int bank = GPIO_BANK(pin);
     unsigned int num = GPIO_NUM(pin);
