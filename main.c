@@ -42,7 +42,6 @@ int main()
     while(1)
     {
         scanf("%s", t);
-        printf("\nWysłano: %s\n", t);
         WriteSerial(&fd, t, strlen(t));
         ReadSerial(&fd, r, 8);
 
