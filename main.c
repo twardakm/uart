@@ -37,8 +37,8 @@ int main()
 
     printf("a - dioda 1\nb - dioda 2\nq - wyjscie\n");
 
-    char t[8];
-    char r[8];
+    char *t = malloc(sizeof (char) * 8);
+    char *r = malloc(sizeof (char) * 8);
     while(1)
     {
         scanf("%s", t);
@@ -74,5 +74,9 @@ int main()
         printf("Nie udało się zamknąć portu szeregowego\n");
         return -1;
     }
+
+    free(t);
+    free(r);
+
     return 0;
 }
