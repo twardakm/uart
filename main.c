@@ -42,7 +42,6 @@ int main()
         scanf("%s", &t);
         WriteSerial(&fd, &t, 1);
 
-        ReadSerial(&fd, &r, 1);
         if (r == 'a')
         {
             if (sunxi_gpio_get_output(PIN4))
@@ -59,6 +58,8 @@ int main()
         }
         else if (r == 'q')
             break;
+
+        ReadSerial(&fd, &r, 1);
     }
 
     sunxi_gpio_cleanup();
