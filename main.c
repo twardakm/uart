@@ -61,7 +61,6 @@ int main()
         //    break;
 
         ReadSerial(&fd, r, 8);
-        tcflush(fd, TCIFLUSH);
         printf("\n%s\n", r);
     }
 
