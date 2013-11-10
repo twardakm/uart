@@ -41,7 +41,7 @@ int main()
     while(1)
     {
         scanf("%s", t);
-        printf("\nWysłano: %s\n", t)
+        printf("\nWysłano: %s\n", t);
         WriteSerial(&fd, t, strlen(t));
 
        // if (r == 'a')
