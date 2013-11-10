@@ -31,20 +31,30 @@ int main()
         scanf("%d", &d);
         if (d == 1)
         {
-            if (sunxi_gpio_get_output(PIN4))
+            /*if (sunxi_gpio_get_output(PIN4))
                 sunxi_gpio_set_output(PIN4, 0);
             else
-                sunxi_gpio_set_output(PIN4, 1);
+                sunxi_gpio_set_output(PIN4, 1);*/
+            sunxi_gpio_set_output(PIN4, 1);
+            sunxi_gpio_set_output(PIN39, 1);
         }
         else if (d == 2)
         {
-            if (sunxi_gpio_get_output(PIN39))
+            /*if (sunxi_gpio_get_output(PIN39))
                 sunxi_gpio_set_output(PIN39, 0);
             else
-                sunxi_gpio_set_output(PIN39, 1);
+                sunxi_gpio_set_output(PIN39, 1);*/
+            sunxi_gpio_set_output(PIN4, 0);
+            sunxi_gpio_set_output(PIN39, 0);
         }
         else if (d == 0)
             break;
+        printf ("Konfiguracja portu %d: %d, %d, %d, %d",
+            PIN4, sunxi_gpio_get_output(PIN4, 0), sunxi_gpio_get_output(PIN4, 1),
+            sunxi_gpio_get_output(PIN4, 2), sunxi_gpio_get_output(PIN4, 3));
+        printf ("Konfiguracja portu %d: %d, %d, %d, %d",
+            PIN4, sunxi_gpio_get_output(PIN39, 0), sunxi_gpio_get_output(PIN39, 1),
+            sunxi_gpio_get_output(PIN39, 2), sunxi_gpio_get_output(PIN39, 3));
     }
 
     sunxi_gpio_cleanup();
