@@ -31,9 +31,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="gpio_lib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="gpio_lib.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="uart_olinuxino.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="uart_olinuxino.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
