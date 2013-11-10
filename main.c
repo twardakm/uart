@@ -32,16 +32,16 @@ int main()
         if (d == 1)
         {
             if (sunxi_gpio_get_output(PIN4))
-                sunxi_gpio_set_output(PIN4, 1);
-            else
                 sunxi_gpio_set_output(PIN4, 0);
+            else
+                sunxi_gpio_set_output(PIN4, 1);
         }
         else if (d == 2)
         {
             if (sunxi_gpio_get_output(PIN39))
-                sunxi_gpio_set_output(PIN39, 1);
-            else
                 sunxi_gpio_set_output(PIN39, 0);
+            else
+                sunxi_gpio_set_output(PIN39, 1);
         }
         else if (d == 0)
             break;
