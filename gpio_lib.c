@@ -129,6 +129,19 @@ int sunxi_gpio_output(unsigned int pin, unsigned int val) {
     return 0;
 }
 
+int sunxi_gpio_get_output(unsigned int pin)
+{
+    unsigned int bank = GPIO_BANK(pin);
+
+    if(SUNXI_PIO_BASE == 0)
+    {
+        return -1;
+    }
+    struct sunxi_gpio *pio =&((struct sunxi_gpio_reg *)SUNXI_PIO_BASE)->gpio_bank[bank];
+
+    return *(&pio->dat);
+}
+
 int sunxi_gpio_input(unsigned int pin) {
 
     unsigned int dat;

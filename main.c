@@ -42,7 +42,7 @@ int main()
         else if (d == 0)
             break;
 
-        printf("Stan portu 4: %d", sunxi_gpio_get_cfgpin(PIN4));
+        printf("Stan portu 4: %d", sunxi_gpio_get_output(PIN4));
     }
 
     sunxi_gpio_cleanup();
