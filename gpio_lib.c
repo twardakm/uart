@@ -133,14 +133,15 @@ int sunxi_gpio_get_output(unsigned int pin, int ktore)
 {
     unsigned int bank = GPIO_BANK(pin);
     unsigned int num = GPIO_NUM(pin);
+    unsigned int dat;
 
     if(SUNXI_PIO_BASE == 0)
     {
         return -1;
     }
     struct sunxi_gpio *pio =&((struct sunxi_gpio_reg *)SUNXI_PIO_BASE)->gpio_bank[bank];
-	
-	unsigned int dat = *(&pio->dat);
+
+	dat = *(&pio->dat);
 	dat >>= num;
 
     return (dat & 0x1);
