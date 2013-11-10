@@ -38,23 +38,16 @@ int main()
     printf("a - dioda 1\nb - dioda 2\nq - wyjscie\n");
 
     char *message = malloc(sizeof (char) * 8);
-    char buff[2];
-    buff[1] = 0;
-    int i = 0;
-    int n;
+    char *buff = malloc(sizeof (char) * 8);
 
     while(1)
     {
-        for (i = 0; i < 8; i++)
-        {
-            n = ReadSerial(&fd, buff, 1);
-            if (n > 0)
-            {
-                message[i] = buff[0];
-                fflush(stdout);
-            }
-        }
-
+        printf("Wiadomość do wysłania: ");
+        scanf("%s", buff);
+        WriteSerial(&fd, buff, strlen(buff));
+        printf("\n-----\nwiadomość wysłana\n-----\n");
+        ReadSerial(&fd, message, strlen (buff));
+        printf("\n+++++\nwiadomość odebrana: %s\n+++++\n", message);
        // if (r == 'a')
       /*  {
             if (sunxi_gpio_get_output(PIN4))
@@ -71,8 +64,6 @@ int main()
         }
 //        else if (r == 'q')
         //    break;*/
-
-        printf("\nOdebrano: %s\n", message);
     }
 
     sunxi_gpio_cleanup();
