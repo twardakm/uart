@@ -2,6 +2,8 @@
 #ifndef _UART_H
 #define _UART_H
 
+#include <termios.h>
+
 extern int _DEBUG;
 
 int OpenSerial(int *fd, char *SerialName, speed_t baudrate);
