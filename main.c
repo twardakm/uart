@@ -41,7 +41,7 @@ int main()
     while(1)
     {
         scanf("%s", t);
-        WriteSerial(&fd, t, 8);
+        WriteSerial(&fd, t, strlen(t));
 
        // if (r == 'a')
         {
