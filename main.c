@@ -44,6 +44,7 @@ int main()
         scanf("%s", t);
         printf("\nWysłano: %s\n", t);
         WriteSerial(&fd, t, strlen(t));
+        ReadSerial(&fd, r, 8);
 
        // if (r == 'a')
         {
@@ -62,7 +63,6 @@ int main()
 //        else if (r == 'q')
         //    break;
 
-        ReadSerial(&fd, r, 8);
         printf("\nOdebrano: %s\n", r);
     }
 
