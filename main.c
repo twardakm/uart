@@ -41,6 +41,7 @@ int main()
     while(1)
     {
         scanf("%s", t);
+        printf("\nWysłano: %s\n", t)
         WriteSerial(&fd, t, strlen(t));
 
        // if (r == 'a')
@@ -61,7 +62,7 @@ int main()
         //    break;
 
         ReadSerial(&fd, r, 8);
-        printf("\n%s\n", r);
+        printf("\nOdebrano: %s\n", r);
     }
 
     sunxi_gpio_cleanup();
