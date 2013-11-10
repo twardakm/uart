@@ -99,7 +99,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
 
     SerialConfig.c_oflag &= ~OPOST; //wyłączenie przetwarzania wyjścia
 
-    fcntl (*fd, F_SETFL, 0); //funkcja read czyta aż do znaku nowej linii
+    fcntl (*fd, F_SETFL, FNDELAY); //funkcja read czyta aż do znaku nowej linii
 
     if(_DEBUG)
         printf("Setting in/out speed...");
