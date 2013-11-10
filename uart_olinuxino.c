@@ -38,7 +38,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
     if(_DEBUG)
         printf("Opening serial port: %s...", SerialName);
 
-    *fd = open(SerialName, O_RDWR);
+    *fd = open(SerialName, O_RDWR | O_NOCTTY | O_NDELAY);
     if(*fd < 0)
     {
         if(_DEBUG)
