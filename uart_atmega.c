@@ -47,5 +47,6 @@ void diody(char bajt)
         PORTB ^= 0x01;
     else
         PORTB ^= 0x03;
+    USART_Transmit(bajt);
 }
 

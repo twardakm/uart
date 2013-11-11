@@ -45,6 +45,10 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="uart_atmega.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="uart_atmega.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
