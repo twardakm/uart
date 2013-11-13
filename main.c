@@ -42,9 +42,8 @@ int main()
 
     while(1)
     {
-        printf("Wiadomość do wysłania: ");
-        scanf("%s", buff);
-        WriteSerial(&fd, buff, 8);
+        getchar();
+        WriteSerial(&fd, "AT\r\n", 8);
         printf("\n-----\nwiadomość wysłana\n-----\n");
         ReadSerial(&fd, message, 8);
         printf("\n+++++\nwiadomość odebrana: %s\n+++++\n", message);
