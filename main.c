@@ -25,16 +25,16 @@ int main()
         i = 0;
         ch[1] = 0;
 
-        WriteSerial(&fd, "A\n", 2);
+        WriteSerial(&fd, "A", 1);
         printf("\n-----\nwiadomość wysłana\n-----\n");
         getchar();
 
         while(1)
         {
             if (ReadSerial(&fd, ch, 1) == -1) break;
-            if(ch[0] == '\n')
+            if(ch[0] == '\n' || ch[0] == 'A')
             {
-                printf("Koniec odbierania\n");
+                printf("Koniec odbierania: %c\n", ch[0]);
                 break;
             }
             buff[i++] = ch[0];
