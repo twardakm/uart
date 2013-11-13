@@ -73,7 +73,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
     SerialConfig.c_cflag &= ~CSIZE;
     SerialConfig.c_cflag |= CS8;
     /* ------------------------ */
-    /* wyłączona kontrola parzystonści i 1 bit stopu */
+    /* wyłączona kontrola parzystonści i 1 bity stopu */
     SerialConfig.c_cflag &= ~PARENB;
     SerialConfig.c_cflag &= ~CSTOPB;
     /* --------------------------------------------- */
@@ -98,14 +98,12 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
 
     SerialConfig.c_oflag &= ~OPOST; //wyłączenie przetwarzania wyjścia
 
-    fcntl (*fd, F_SETFL, FNDELAY); //funkcja read czyta aż do znaku nowej linii
+    //fcntl (*fd, F_SETFL, FNDELAY); //funkcja read czyta aż do znaku nowej linii
 
     if(_DEBUG)
         printf("Setting in/out speed...");
     cfsetispeed(&SerialConfig, baudrate);
     cfsetospeed(&SerialConfig, baudrate);
-
-    cfmakeraw(&SerialConfig);
 
     if(_DEBUG)
         printf("Done\n");
@@ -127,8 +125,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
                 printf("Done\n");
             if(_DEBUG)
                 printf("Flushing serial port...");
-            ioctl(*fd, TCFLSH, 0);
-            //tcflush(*fd, TCIFLUSH);
+            tcflush(*fd, TCIFLUSH);
             return 0;
         }
 

@@ -27,7 +27,7 @@ int main()
 
     //ustawianie UART
     int fd;
-    if (OpenSerial(&fd, "/dev/ttyS0", B4800) == 0) printf("Port szeregowy został otwarty poprawnie\n");
+    if (OpenSerial(&fd, "/dev/ttyS0", B38400) == 0) printf("Port szeregowy został otwarty poprawnie\n");
     else
     {
         printf("Błąd przy otwieraniu portu szeregowego\n");
@@ -48,22 +48,6 @@ int main()
         printf("\n-----\nwiadomość wysłana\n-----\n");
         ReadSerial(&fd, message, strlen (buff));
         printf("\n+++++\nwiadomość odebrana: %s\n+++++\n", message);
-       // if (r == 'a')
-      /*  {
-            if (sunxi_gpio_get_output(PIN4))
-                sunxi_gpio_set_output(PIN4, 0);
-            else
-                sunxi_gpio_set_output(PIN4, 1);
-        }
-        //else if (r == 'b')
-        {
-            if (sunxi_gpio_get_output(PIN39))
-                sunxi_gpio_set_output(PIN39, 0);
-            else
-                sunxi_gpio_set_output(PIN39, 1);
-        }
-//        else if (r == 'q')
-        //    break;*/
     }
 
     sunxi_gpio_cleanup();
