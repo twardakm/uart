@@ -55,9 +55,14 @@ int main()
         getchar();
         while(1)
         {
-            if(ReadSerial(&fd, ch, 1) == -1 || ch[0] == '\n')
+            if (ReadSerial(&fd, ch, 1) == -1)
             {
-                printf("nic nie odebrano\n");
+                printf("błąd\n");
+                break;
+            }
+            if(ch[0] == '\n')
+            {
+                printf("Koniec odbierania\n");
                 break;
             }
             buff[i++] = ch[0];
