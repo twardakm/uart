@@ -38,7 +38,7 @@ int main()
     printf("a - dioda 1\nb - dioda 2\nq - wyjscie\n");
 
     char *message = malloc(sizeof (char) * 8);
-    char *buff = malloc(sizeof (char) * 80);
+    char *buff;
 
     char ch[2];
     int i = 0;
@@ -46,6 +46,7 @@ int main()
 
     while(1)
     {
+        buff = malloc(sizeof (char) * 80);
         i = 0;
         ch[1] = 0;
         getchar();
@@ -62,6 +63,7 @@ int main()
             buff[i++] = ch[0];
         }
         printf("\n+++++\nwiadomość odebrana: %s\n+++++\n", buff);
+        free(buff);
     }
 
     sunxi_gpio_cleanup();
