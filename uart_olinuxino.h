@@ -4,11 +4,7 @@
 
 #include <termios.h>
 
-#ifdef DEBUG
 #define _DEBUG 1
-#else
-#define _DEBUG 0
-#endif
 
 int OpenSerial(int *fd, char *SerialName, speed_t baudrate);
 int CloseSerial(int *fd);
