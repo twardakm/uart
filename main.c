@@ -38,14 +38,25 @@ int main()
     printf("a - dioda 1\nb - dioda 2\nq - wyjscie\n");
 
     char *message = malloc(sizeof (char) * 8);
-    char *buff = malloc(sizeof (char) * 8);
+    char *buff = malloc(sizeof (char) * 80);
+
+    char ch[2];
+    int i = 0;
 
     while(1)
     {
+        ch[1] = 0;
         getchar();
         WriteSerial(&fd, "AT\r\n", 8);
         printf("\n-----\nwiadomość wysłana\n-----\n");
-        ReadSerial(&fd, message, 8);
+        getchar();
+        while(1)
+        {
+            ReadSerial(&fd, ch, 1);
+            if(ch[0] == '\n')
+                break;
+            buff[i++] = ch[0];
+        }
         printf("\n+++++\nwiadomość odebrana: %s\n+++++\n", message);
     }
 
