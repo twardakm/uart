@@ -42,22 +42,26 @@ int main()
 
     char ch[2];
     int i = 0;
+    int d = 0;
 
     while(1)
     {
+        i = 0;
         ch[1] = 0;
         getchar();
-        WriteSerial(&fd, "AT\r\n", 8);
+        WriteSerial(&fd, "AT\r\n", 4);
         printf("\n-----\nwiadomość wysłana\n-----\n");
         getchar();
         while(1)
         {
-            ReadSerial(&fd, ch, 1);
-            if(ch[0] == '\n')
+            if(ReadSerial(&fd, ch, 1) == -1 || ch[0] == '\n')
+            {
+                printf("nic nie odebrano\n");
                 break;
+            }
             buff[i++] = ch[0];
         }
-        printf("\n+++++\nwiadomość odebrana: %s\n+++++\n", message);
+        printf("\n+++++\nwiadomość odebrana: %s\n+++++\n", buff);
     }
 
     sunxi_gpio_cleanup();
@@ -70,6 +74,7 @@ int main()
     }
 
     free(message);
+    free(buff);
 
     return 0;
 }
