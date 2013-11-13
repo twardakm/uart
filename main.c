@@ -44,9 +44,9 @@ int main()
     {
         printf("Wiadomość do wysłania: ");
         scanf("%s", buff);
-        WriteSerial(&fd, buff, strlen(buff));
+        WriteSerial(&fd, buff, 8);
         printf("\n-----\nwiadomość wysłana\n-----\n");
-        ReadSerial(&fd, message, strlen (buff));
+        ReadSerial(&fd, message, 8);
         printf("\n+++++\nwiadomość odebrana: %s\n+++++\n", message);
     }
 
