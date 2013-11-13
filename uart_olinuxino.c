@@ -33,12 +33,12 @@
 int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
 {
     struct termios SerialConfig;
-    memset(&SerialConfig, 0, sizeof(SerialConfig));
+    memset(&SerialConfig, 0, sizeof (SerialConfig));
 
     if(_DEBUG)
         printf("Opening serial port: %s...", SerialName);
 
-    *fd = open(SerialName, O_RDWR | O_NOCTTY | O_NDELAY);
+    *fd = open(SerialName, O_RDWR | O_NOCTTY | O_NDELAY | O_SYNC);
     if(*fd < 0)
     {
         if(_DEBUG)
@@ -75,6 +75,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
     /* ------------------------ */
     /* wyłączona kontrola parzystonści i 1 bity stopu */
     SerialConfig.c_cflag &= ~PARENB;
+    SerialConfig.c_cflag &- ~PARODD;
     SerialConfig.c_cflag &= ~CSTOPB;
     /* --------------------------------------------- */
     SerialConfig.c_cflag &= ~CRTSCTS; // wyłączenie sprzętowej kontroli przepływu
@@ -84,29 +85,26 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
 
     /* L_FLAG
     * tryb kanoniczny bez echa i kontroli przepływu danych*/
-    SerialConfig.c_lflag |= ICANON;
-    SerialConfig.c_lflag &= ~(ECHO | ECHOE);
+    SerialConfig.c_lflag = 0;
     /* ------ */
 
     /* C_IFLAG */
 
     SerialConfig.c_iflag &= ~(IXON | IXOFF | IXANY); //wyłączenie sprzętowej kontroli przepływu danych
     /*ignorowanie znaku <CR>, znak nowej lini będzie odblokowywał wywołanie read()*/
-    SerialConfig.c_iflag &= ~(INLCR | IUCLC | IGNCR);
+    SerialConfig.c_iflag &= ~IGNBRK;         // ignore break signal
     /* -------------------------------------------------------------------------- */
     /* ------- */
 
-    SerialConfig.c_oflag &= ~OPOST; //wyłączenie przetwarzania wyjścia
-
-    //fcntl (*fd, F_SETFL, FNDELAY); //funkcja read czyta aż do znaku nowej linii
+    SerialConfig.c_oflag &= 0; //no remapping, no delays
+    
+    SerialConfig.c_cc[VMIN]  = 0;            // read doesn't block
+    SerialConfig.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
 
     if(_DEBUG)
         printf("Setting in/out speed...");
     cfsetispeed(&SerialConfig, baudrate);
     cfsetospeed(&SerialConfig, baudrate);
-
-    if(_DEBUG)
-        printf("Done\n");
 
     if(_DEBUG)
        printf("Done\n");
@@ -123,9 +121,9 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
         {
             if(_DEBUG)
                 printf("Done\n");
-            if(_DEBUG)
+            /*if(_DEBUG)
                 printf("Flushing serial port...");
-            tcflush(*fd, TCIFLUSH);
+            tcflush(*fd, TCIFLUSH);*/
             return 0;
         }
 
