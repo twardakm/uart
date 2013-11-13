@@ -50,11 +50,12 @@ int main()
         i = 0;
         ch[1] = 0;
         getchar();
-        WriteSerial(&fd, "AT\r\n", 4);
+        WriteSerial(&fd, "A", 4);
         printf("\n-----\nwiadomość wysłana\n-----\n");
         getchar();
         while(1)
         {
+            getchar();
             if (ReadSerial(&fd, ch, 1) == -1)
             {
                 printf("błąd\n");
