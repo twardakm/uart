@@ -10,57 +10,28 @@ int main()
 {
     printf("UART\n---------------\n");
 
-    if (sunxi_gpio_init() == SETUP_OK) printf("Zainicjalizowano poprawnie GPIO\n");
-    else
-    {
-        printf("Błąd inicjalizacji GPIO\n");
-        return -1;
-    }
-
-    if (sunxi_gpio_set_cfgpin(PIN4, 1) == 0 &&
-        sunxi_gpio_set_cfgpin(PIN39, 1) == 0) printf("Port %d oraz %d został ustawiony jako wyjście\n", PIN4, PIN39);
-    else
-    {
-        printf("Błąd ustawiania na wyjście portów\n");
-        return -1;
-    }
-
     //ustawianie UART
     int fd;
-    if (OpenSerial(&fd, "/dev/ttyS0", B38400) == 0) printf("Port szeregowy został otwarty poprawnie\n");
-    else
-    {
-        printf("Błąd przy otwieraniu portu szeregowego\n");
-        return -1;
-    }
+    if (OpenSerial(&fd, "/dev/ttyS0", B38400) != 0) return -1;
 
-
-    printf("a - dioda 1\nb - dioda 2\nq - wyjscie\n");
-
-    char *message = malloc(sizeof (char) * 8);
     char *buff;
 
     char ch[2];
     int i = 0;
-    int d = 0;
 
     while(1)
     {
         buff = malloc(sizeof (char) * 80);
         i = 0;
         ch[1] = 0;
-        getchar();
-        WriteSerial(&fd, "A", 4);
+
+        WriteSerial(&fd, "A\n", 2);
         printf("\n-----\nwiadomość wysłana\n-----\n");
         getchar();
+
         while(1)
         {
-            getchar();
-            if (ReadSerial(&fd, ch, 1) == -1)
-            {
-                printf("błąd\n");
-                break;
-            }
+            if (ReadSerial(&fd, ch, 1) == -1) break;
             if(ch[0] == '\n')
             {
                 printf("Koniec odbierania\n");
@@ -72,16 +43,8 @@ int main()
         free(buff);
     }
 
-    sunxi_gpio_cleanup();
+    if (CloseSerial(&fd) != 0) return -1;
 
-    if (CloseSerial(&fd) == 0) printf ("Poprawnie zamknięto port szeregowy\n");
-    else
-    {
-        printf("Nie udało się zamknąć portu szeregowego\n");
-        return -1;
-    }
-
-    free(message);
     free(buff);
 
     return 0;
