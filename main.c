@@ -3,12 +3,16 @@
 #include <stdlib.h>
 
 
-#include "uart-config.h"
-#include "uart-rw.h"
+#include "uart_config.h"
+#include "uart_rw.h"
+#include "uart_interaction.h"
 
 int main()
 {
-    printf("UART\n---------------\n");
+    welcomeMessage();
+
+    port *myPort = malloc(sizeof(port));
+    getData(myPort);
 
     //ustawianie UART
     int fd;
