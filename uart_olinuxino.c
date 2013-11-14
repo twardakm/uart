@@ -93,16 +93,19 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
     SerialConfig.c_iflag &= ~(IXON | IXOFF | IXANY); //wyłączenie sprzętowej kontroli przepływu danych
     /*ignorowanie znaku <CR>, znak nowej lini będzie odblokowywał wywołanie read()*/
     SerialConfig.c_iflag &= ~IGNBRK;         // ignore break signal
+    SerialConfig.c_iflag &= ~IGNCR;
+    SerialConfig.c_iflag &= ~ICRNL;
     /* -------------------------------------------------------------------------- */
     /* ------- */
 
     SerialConfig.c_oflag &= 0; //no remapping, no delays
+    SerialConfig.c_oflag |= ONLCR;
 
     SerialConfig.c_cc[VMIN]  = 0;            // read doesn't block
     SerialConfig.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
 
     if(_DEBUG)
-        printf("Setting in/out speed...");
+        printf("Setting in/out speed...\n");
     cfsetispeed(&SerialConfig, baudrate);
     cfsetospeed(&SerialConfig, baudrate);
 
@@ -110,7 +113,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
        printf("Done\n");
 
     if(_DEBUG)
-        printf("Applying new configuration...");
+        printf("Applying new configuration...\n");
         if(tcsetattr(*fd, TCSANOW, &SerialConfig) != 0)
         {
             if(_DEBUG)
@@ -119,6 +122,17 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
         }
         else
         {
+            if(SerialConfig.c_iflag & IGNCR) {
+                printf("Received CRs are ignored.\n");
+            }
+            else if(SerialConfig.c_iflag & ICRNL)
+            {
+                printf("Received CRs are translated to NLs.\n");
+            }
+            else
+            {
+                printf("Received CRs are not changed.\n");
+            }
             if(_DEBUG)
                 printf("Done\n");
             /*if(_DEBUG)

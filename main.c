@@ -19,11 +19,12 @@ int main()
 
     char text[100];
     int i = 0;
+    char send[4] = {'A','T',13,'\n'};
 
     while(1)
     {
         printf("\nWysyłanie \'AT\'... ");
-        WriteSerial(&fd, "AT\r\n", 4);
+        WriteSerial(&fd, send, 4);
         printf("wysłano");
         getchar();
 
