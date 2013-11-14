@@ -9,6 +9,7 @@ typedef struct port
 {
     char *serialName;
     speed_t baudrate;
+    int baud; //to samo co baudrate tylko w int
     int stopBit;
     int *fd; //wskaźnik na plik
     struct termios serialConfig;
