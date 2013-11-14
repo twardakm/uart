@@ -12,40 +12,38 @@ int main()
 
     //ustawianie UART
     int fd;
-    if (OpenSerial(&fd, "/dev/ttyS0", B38400) != 0) return -1;
+    if (OpenSerial(&fd, "/dev/ttyUSB0", B38400) != 0) return -1;
 
-    char *buff;
+    char buff[2];
+    buff[1] = '0';
 
-    char ch[2];
+    char text[100];
     int i = 0;
 
     while(1)
     {
-        buff = malloc(sizeof (char) * 80);
-        i = 0;
-        ch[1] = 0;
-
-        WriteSerial(&fd, "A", 1);
-        printf("\n-----\nwiadomość wysłana\n-----\n");
+        printf("\nWysyłanie \'AT\'... ");
+        WriteSerial(&fd, "AT\r\n", 4);
+        printf("wysłano");
         getchar();
 
-        while(1)
+        while (1)
         {
-            if (ReadSerial(&fd, ch, 1) == -1) break;
-            if(ch[0] == '\n' || ch[0] == 'A')
+            ReadSerial(&fd, buff, 1);
+            if (buff[0] == '\n')
             {
-                printf("Koniec odbierania: %c\n", ch[0]);
+                text[i] = '\n';
+                text[++i] = '\0';
                 break;
             }
-            buff[i++] = ch[0];
+            text[i++] = buff[0];
         }
-        printf("\n+++++\nwiadomość odebrana: %s\n+++++\n", buff);
-        free(buff);
+        break;
     }
 
-    if (CloseSerial(&fd) != 0) return -1;
+    printf("Odebrano: %s", text);
 
-    free(buff);
+    if (CloseSerial(&fd) != 0) return -1;
 
     return 0;
 }

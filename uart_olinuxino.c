@@ -38,7 +38,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
     if(_DEBUG)
         printf("Opening serial port: %s...", SerialName);
 
-    *fd = open(SerialName, O_RDWR | O_NOCTTY | O_NDELAY | O_SYNC);
+    *fd = open(SerialName, O_RDWR | O_NOCTTY | O_SYNC);
     if(*fd < 0)
     {
         if(_DEBUG)
@@ -75,7 +75,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
     /* ------------------------ */
     /* wyłączona kontrola parzystonści i 1 bity stopu */
     SerialConfig.c_cflag &= ~PARENB;
-    SerialConfig.c_cflag &- ~PARODD;
+    SerialConfig.c_cflag &= ~PARODD;
     SerialConfig.c_cflag &= ~CSTOPB;
     /* --------------------------------------------- */
     SerialConfig.c_cflag &= ~CRTSCTS; // wyłączenie sprzętowej kontroli przepływu
@@ -97,7 +97,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
     /* ------- */
 
     SerialConfig.c_oflag &= 0; //no remapping, no delays
-    
+
     SerialConfig.c_cc[VMIN]  = 0;            // read doesn't block
     SerialConfig.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
 
