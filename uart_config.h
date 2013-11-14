@@ -1,6 +1,5 @@
-
-#ifndef _UART_H
-#define _UART_H
+#ifndef _UART_CONFIG_H_INCLUDED
+#define _UART_CONFIG_H_INCLUDED
 
 #include <termios.h>
 
@@ -8,6 +7,5 @@
 
 int OpenSerial(int *fd, char *SerialName, speed_t baudrate);
 int CloseSerial(int *fd);
-int WriteSerial(int *fd, char *buff, int len);
-int ReadSerial(int *fd, char *buff, int len);
+
 #endif

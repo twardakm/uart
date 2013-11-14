@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 
-#include "uart_olinuxino.h"
-#include "gpio_lib.h"
+#include "uart-config.h"
+#include "uart-rw.h"
 
 int main()
 {
