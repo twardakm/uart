@@ -15,7 +15,7 @@ typedef struct port
     struct termios serialConfig;
 }port;
 
-int OpenSerial(int *fd, char *SerialName, speed_t baudrate);
-int CloseSerial(int *fd);
+int OpenSerial(port *myPort);
+int CloseSerial(port *fd);
 
 #endif

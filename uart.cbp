@@ -34,14 +34,18 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="uart-config.c">
+		<Unit filename="uart_config.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="uart-config.h" />
-		<Unit filename="uart-rw.c">
+		<Unit filename="uart_config.h" />
+		<Unit filename="uart_interaction.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="uart-rw.h" />
+		<Unit filename="uart_interaction.h" />
+		<Unit filename="uart_rw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="uart_rw.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -3,7 +3,7 @@
 
 #include <termios.h>
 
-int WriteSerial(int *fd, char *buff, int len);
-int ReadSerial(int *fd, char *buff, int len);
+int WriteSerial(port *myPort, char *buff, int len);
+int ReadSerial(port *myPort, char *buff, int len);
 
 #endif // UART-RW_H_INCLUDED

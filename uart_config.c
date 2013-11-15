@@ -29,16 +29,15 @@
 
 #include "uart_config.h"
 
-int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
+int OpenSerial(port *myPort)
 {
-    struct termios SerialConfig;
-    memset(&SerialConfig, 0, sizeof (SerialConfig));
+    memset(&myPort->serialConfig, 0, sizeof (myPort->serialConfig));
 
     if(_DEBUG)
-        printf("Opening serial port: %s...", SerialName);
+        printf("Opening serial port: %s...", myPort->serialName);
 
-    *fd = open(SerialName, O_RDWR | O_NOCTTY | O_SYNC);
-    if(*fd < 0)
+    *myPort->fd = open(myPort->serialName, O_RDWR | O_NOCTTY | O_SYNC);
+    if(myPort->fd < 0)
     {
         if(_DEBUG)
             printf("Fail\n");
@@ -51,8 +50,7 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
 
         if(_DEBUG)
             printf("Getting current configuration...");
-
-        if(tcgetattr(*fd, &SerialConfig) != 0)
+        if(tcgetattr(*myPort->fd, &myPort->serialConfig) != 0)
         {
             if(_DEBUG)
                 printf("Fail\n");
@@ -69,51 +67,51 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
     /* C_CFLAG */
 
     /* ustawienie 8 bitów danej */
-    SerialConfig.c_cflag &= ~CSIZE;
-    SerialConfig.c_cflag |= CS8;
+    myPort->serialConfig.c_cflag &= ~CSIZE;
+    myPort->serialConfig.c_cflag |= CS8;
     /* ------------------------ */
     /* wyłączona kontrola parzystonści i 1 bity stopu */
-    SerialConfig.c_cflag &= ~PARENB;
-    SerialConfig.c_cflag &= ~PARODD;
-    SerialConfig.c_cflag &= ~CSTOPB;
+    myPort->serialConfig.c_cflag &= ~PARENB;
+    myPort->serialConfig.c_cflag &= ~PARODD;
+    myPort->serialConfig.c_cflag &= ~CSTOPB;
     /* --------------------------------------------- */
-    SerialConfig.c_cflag &= ~CRTSCTS; // wyłączenie sprzętowej kontroli przepływu
-    SerialConfig.c_cflag |= (CLOCAL | CREAD); //włączenie odbiornika
+    myPort->serialConfig.c_cflag &= ~CRTSCTS; // wyłączenie sprzętowej kontroli przepływu
+    myPort->serialConfig.c_cflag |= (CLOCAL | CREAD); //włączenie odbiornika
 
     /* ------ */
 
     /* L_FLAG
     * tryb kanoniczny bez echa i kontroli przepływu danych*/
-    SerialConfig.c_lflag = 0;
+    myPort->serialConfig.c_lflag = 0;
     /* ------ */
 
     /* C_IFLAG */
 
-    SerialConfig.c_iflag &= ~(IXON | IXOFF | IXANY); //wyłączenie sprzętowej kontroli przepływu danych
+    myPort->serialConfig.c_iflag &= ~(IXON | IXOFF | IXANY); //wyłączenie sprzętowej kontroli przepływu danych
     /*ignorowanie znaku <CR>, znak nowej lini będzie odblokowywał wywołanie read()*/
-    SerialConfig.c_iflag &= ~IGNBRK;         // ignore break signal
-    SerialConfig.c_iflag &= ~IGNCR;
-    SerialConfig.c_iflag &= ~ICRNL;
+    myPort->serialConfig.c_iflag &= ~IGNBRK;         // ignore break signal
+    myPort->serialConfig.c_iflag &= ~IGNCR;
+    myPort->serialConfig.c_iflag &= ~ICRNL;
     /* -------------------------------------------------------------------------- */
     /* ------- */
 
-    SerialConfig.c_oflag &= 0; //no remapping, no delays
-    SerialConfig.c_oflag |= ONLCR;
+    myPort->serialConfig.c_oflag &= 0; //no remapping, no delays
+    myPort->serialConfig.c_oflag |= ONLCR;
 
-    SerialConfig.c_cc[VMIN]  = 0;            // read doesn't block
-    SerialConfig.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
+    myPort->serialConfig.c_cc[VMIN]  = 0;            // read doesn't block
+    myPort->serialConfig.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
 
     if(_DEBUG)
         printf("Setting in/out speed...\n");
-    cfsetispeed(&SerialConfig, baudrate);
-    cfsetospeed(&SerialConfig, baudrate);
+    cfsetispeed(&myPort->serialConfig, myPort->baudrate);
+    cfsetospeed(&myPort->serialConfig, myPort->baudrate);
 
     if(_DEBUG)
        printf("Done\n");
 
     if(_DEBUG)
         printf("Applying new configuration...\n");
-        if(tcsetattr(*fd, TCSANOW, &SerialConfig) != 0)
+        if(tcsetattr(*myPort->fd, TCSANOW, &myPort->serialConfig) != 0)
         {
             if(_DEBUG)
                 printf("Fail\n");
@@ -121,10 +119,10 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
         }
         else
         {
-            if(SerialConfig.c_iflag & IGNCR) {
+            if(myPort->serialConfig.c_iflag & IGNCR) {
                 printf("Received CRs are ignored.\n");
             }
-            else if(SerialConfig.c_iflag & ICRNL)
+            else if(myPort->serialConfig.c_iflag & ICRNL)
             {
                 printf("Received CRs are translated to NLs.\n");
             }
@@ -143,12 +141,12 @@ int OpenSerial(int *fd, char *SerialName, speed_t baudrate)
 
 
 }
-int CloseSerial(int *fd)
+int CloseSerial(port *myPort)
 {
     if(_DEBUG)
         printf("Closing serial port...");
 
-    if(close(*fd) < 0)
+    if(close(*myPort->fd) < 0)
     {
         if(_DEBUG)
             printf("Fail\n");
