@@ -11,7 +11,9 @@ int main()
 {
     welcomeMessage();
 
-    port *myPort = malloc(sizeof(port));
+    port *myPort = (port *)malloc(sizeof(port));
+    myPort->fd = (int *)malloc(sizeof(int));
+
     getData(myPort);
 
     //ustawianie UART
@@ -47,7 +49,17 @@ int main()
 
     printf("Odebrano: %s", text);
 
-    if (CloseSerial(myPort) != 0) return -1;
+    if (CloseSerial(myPort) != 0)
+    {
+        free(myPort->fd);
+        free(myPort->serialName);
+        free(myPort);
+        return -1;
+    }
+
+    free(myPort->fd);
+    free(myPort->serialName);
+    free(myPort);
 
     return 0;
 }
