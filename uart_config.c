@@ -31,7 +31,7 @@
 
 int OpenSerial(port *myPort)
 {
-    memset(&myPort->serialConfig, 0, sizeof (myPort->serialConfig));
+    memset(&myPort->serialConfig, 0, sizeof(struct termios));
 
     if(_DEBUG)
         printf("Opening serial port: %s...", myPort->serialName);
