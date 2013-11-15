@@ -15,8 +15,7 @@ int main()
     getData(myPort);
 
     //ustawianie UART
-    int fd;
-    if (OpenSerial(&fd, "/dev/ttyUSB0", B38400) != 0) return -1;
+    if (OpenSerial(myPort) != 0) return -1;
 
     char buff[2];
     buff[1] = '0';
@@ -28,13 +27,13 @@ int main()
     while(1)
     {
         printf("\nWysyłanie \'AT\'... ");
-        WriteSerial(&fd, send, 4);
+        WriteSerial(myPort, send, 4);
         printf("wysłano");
         getchar();
 
         while (1)
         {
-            ReadSerial(&fd, buff, 1);
+            ReadSerial(myPort, buff, 1);
             if (buff[0] == '\n')
             {
                 text[i] = '\n';
@@ -48,7 +47,7 @@ int main()
 
     printf("Odebrano: %s", text);
 
-    if (CloseSerial(&fd) != 0) return -1;
+    if (CloseSerial(myPort) != 0) return -1;
 
     return 0;
 }
