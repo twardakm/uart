@@ -19,11 +19,13 @@ int main()
     //ustawianie UART
     if (OpenSerial(myPort) != 0) return -1;
 
-    char buff[2];
+    char *buff = malloc(sizeof(char) * 2);
     buff[1] = '0';
 
-    char text[100];
+    char *text = malloc(sizeof(char) * 10);
+
     int i = 0;
+
     char send[4] = {'A','T',13,'\n'};
 
     while(1)
@@ -48,6 +50,9 @@ int main()
     }
 
     printf("Odebrano: %s", text);
+
+    free(buff);
+    free(text);
 
     if (CloseSerial(myPort) != 0)
     {
