@@ -30,7 +30,7 @@ int main()
     while(1)
     {
         send = getMessage(send);
-        if (strcmp(send, "quit\r\n"))
+        if (strcmp(send, "quit\r\n") == 0)
             break;
         printf("\nWysyłanie %s...", send);
         WriteSerial(myPort, send, strlen(send));
@@ -54,6 +54,7 @@ int main()
 
     free(buff);
     free(text);
+    free(send);
 
     if (CloseSerial(myPort) != 0)
     {
