@@ -49,6 +49,7 @@ int main()
             text[i++] = buff[0];
         }
         printf("Odebrano: %s", text);
+        i = 0;
     }
 
     free(buff);
