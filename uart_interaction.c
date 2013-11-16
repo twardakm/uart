@@ -119,7 +119,7 @@ char * getMessage(char * send)
 {
     printf("Message to send:\n");
     scanf("%s", send);
-    strcat(send, "\n");
+    strcat(send, "\r\n");
 
     if (_DEBUG)
         printf("Read: %s, bytes: %d\n", send, strlen(send));
