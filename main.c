@@ -48,9 +48,8 @@ int main()
             }
             text[i++] = buff[0];
         }
+        printf("Odebrano: %s", text);
     }
-
-    printf("Odebrano: %s", text);
 
     free(buff);
     free(text);
