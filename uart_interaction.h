@@ -3,5 +3,6 @@
 
 void welcomeMessage();
 void getData();
+char * getMessage(char * send);
 
 #endif // UART_INTERACTION_H_INCLUDED

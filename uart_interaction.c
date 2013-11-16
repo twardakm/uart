@@ -114,3 +114,14 @@ void getData(port *myPort)
         myPort->serialName, myPort->baud, myPort->stopBit);
     return;
 }
+
+char * getMessage(char * send)
+{
+    printf("Message to send:\n");
+    scanf("%s", send);
+    strcat(send, "\n");
+
+    if (_DEBUG)
+        printf("Read: %s, bytes: %d\n", send, strlen(send));
+    return send;
+}

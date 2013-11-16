@@ -22,16 +22,16 @@ int main()
     char *buff = malloc(sizeof(char) * 2);
     buff[1] = '0';
 
-    char *text = malloc(sizeof(char) * 10);
+    char *text = malloc(sizeof(char) * 16);
+    char *send = malloc(sizeof(char) * 32);
 
     int i = 0;
 
-    char send[4] = {'A','T',13,'\n'};
-
     while(1)
     {
-        printf("\nWysyłanie \'AT\'... ");
-        WriteSerial(myPort, send, 6);
+        send = getMessage(send);
+        printf("\nWysyłanie %s...", send);
+        WriteSerial(myPort, send, strlen(send));
         printf("wysłano\n");
         getchar();
 
