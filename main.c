@@ -22,8 +22,8 @@ int main()
     char *buff = malloc(sizeof(char) * 2);
     buff[1] = '0';
 
-    char *text = malloc(sizeof(char) * 16);
-    char *send = malloc(sizeof(char) * 32);
+    char *text = malloc(sizeof(char) * 128);
+    char *send = malloc(sizeof(char) * 128);
 
     int i = 0;
 
