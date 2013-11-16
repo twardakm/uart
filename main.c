@@ -30,6 +30,8 @@ int main()
     while(1)
     {
         send = getMessage(send);
+        if (strcmp(send, "quit\r\n"))
+            break;
         printf("\nWysyłanie %s...", send);
         WriteSerial(myPort, send, strlen(send));
         printf("wysłano\n");
@@ -46,7 +48,6 @@ int main()
             }
             text[i++] = buff[0];
         }
-        break;
     }
 
     printf("Odebrano: %s", text);
