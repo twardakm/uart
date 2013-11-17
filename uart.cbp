@@ -13,7 +13,9 @@
 				<Option type="5" />
 				<Option compiler="avrgcc" />
 				<Compiler>
+					<Add option="-mmcu=atmega8" />
 					<Add option="-g" />
+					<Add option="-DF_CPU=4000000L" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -52,6 +54,22 @@
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+			<AutoVersioning>
+				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
+				<Settings autoincrement="1" date_declarations="1" update_manifest="0" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
+				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
+				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
+			</AutoVersioning>
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
