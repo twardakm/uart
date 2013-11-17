@@ -2,7 +2,7 @@
 #define UART_ATMEGA_H_INCLUDED
 
 /*str 159 datasheet AtMega*/
-#define MYUBRR 12
+#define MYUBRR 25
 #include <avr/interrupt.h>
 
 /*Funkcje z datasheet*/
