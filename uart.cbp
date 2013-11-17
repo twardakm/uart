@@ -12,6 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="5" />
 				<Option compiler="avrgcc" />
+				<Option projectCompilerOptionsRelation="1" />
 				<Compiler>
 					<Add option="-mmcu=atmega8" />
 					<Add option="-g" />
